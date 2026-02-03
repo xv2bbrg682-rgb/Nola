@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nola-IA - Intelligence Artificielle Gabonaise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables et styles de base */
+        :root {
+            --primary-color: #005B41;
+            --secondary-color: #008170;
+            --accent-color: #00DFA2;
+            --light-color: #F6F5F2;
+            --dark-color: #0F0F0F;
+            --gray-color: #6c757d;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.7;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            color: var(--primary-color);
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 91, 65, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 91, 65, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .logo i {
+            margin-right: 0.7rem;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 12rem;
+            padding-bottom: 5rem;
+            background: linear-gradient(135deg, rgba(0, 91, 65, 0.05) 0%, rgba(0, 223, 162, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 223, 162, 0.1) 0%, rgba(0, 223, 162, 0) 70%);
+            top: 10%;
+            right: 10%;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 3rem;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-text .highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+            border: 8px solid white;
+        }
+
+        .hero-image img:hover {
+            transform: perspective(1000px) rotateY(5deg);
+        }
+
+        .founder-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            max-width: 600px;
+        }
+
+        .founder-info i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-right: 1.5rem;
+        }
+
+        .founder-text h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section À propos */
+        .about {
+            background-color: white;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 2rem;
+        }
+
+        .about-features {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .feature {
+            background-color: var(--light-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section Services */
+        .services {
+            background-color: #f8f9fa;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Section Contact */
+        .contact {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-right: 1.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-phone {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .contact-phone h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-phone a {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 223, 162, 0.2);
+        }
+
+        /* Section Réalisations */
+        .achievements {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .achievements h2 {
+            color: white;
+        }
+
+        .achievements h2:after {
+            background: var(--accent-color);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .achievement:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .achievement i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+
+        .footer-about p {
+            color: #bbb;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            color: #bbb;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            color: var(--accent-color);
+            margin-right: 0.8rem;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+            
+            .hero-text p {
+                max-width: 100%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .hero {
+                padding-top: 10rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .founder-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .founder-info i {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <!-- Header et Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="#" class="logo">
+                        <i class="fas fa-robot"></i>Nola<span>-IA</span>
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#realisations">Réalisations</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1>L'Intelligence Artificielle <span class="highlight">Gabonaise</span> au Service de l'Afrique</h1>
+                    <p>Nola-IA développe des solutions d'intelligence artificielle innovantes et adaptées aux besoins des entreprises africaines depuis 2026.</p>
+                    <div class="hero-btns">
+                        <a href="#services" class="btn btn-primary">Nos Services</a>
+                        <a href="#contact" class="btn btn-outline">Nous Contacter</a>
+                    </div>
+                    
+                    <div class="founder-info fade-in delay-1">
+                        <i class="fas fa-user-tie float"></i>
+                        <div class="founder-text">
+                            <h4>Fondé par NOLA D NAXE</h4>
+                            <p>Jeune visionnaire gabonais de 19 ans passionné par la technologie et l'innovation au service du développement africain.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image fade-in delay-2">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="IA Gabonaise">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section À propos -->
+    <section id="apropos" class="about">
+        <div class="container">
+            <h2>À propos de Nola-IA</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h3>Notre Vision</h3>
+                    <p>Nola-IA a été fondée en 2026 par <strong>NOLA D NAXE</strong> avec une vision claire : démocratiser l'accès aux technologies d'intelligence artificielle en Afrique et particulièrement au Gabon.</p>
+                    <p>Nous croyons fermement que l'IA peut être un levier puissant pour le développement économique et social du continent africain.</p>
+                    <p>Notre équipe d'experts gabonais et africains travaille quotidiennement à créer des solutions adaptées aux réalités et défis spécifiques de notre région.</p>
+                    <a href="#contact" class="btn btn-primary">Rejoignez notre mission</a>
+                </div>
+                <div class="about-features">
+                    <div class="feature fade-in delay-1">
+                        <i class="fas fa-flag"></i>
+                        <h4>Made in Gabon</h4>
+                        <p>Solutions développées localement avec une compréhension des besoins africains</p>
+                    </div>
+                    <div class="feature fade-in delay-2">
+                        <i class="fas fa-bullseye"></i>
+                        <h4>Mission 2030</h4>
+                        <p>Former 1000 experts en IA au Gabon d'ici 2030</p>
+                    </div>
+                    <div class="feature fade-in delay-3">
+                        <i class="fas fa-hands-helping"></i>
+                        <h4>Impact Social</h4>
+                        <p>Solutions d'IA pour améliorer l'éducation, la santé et l'agriculture</p>
+                    </div>
+                    <div class="feature fade-in delay-4">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Formation</h4>
+                        <p>Programmes de formation en IA pour les jeunes talents gabonais</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Nos Services IA</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analyse Prédictive</h3>
+                    <p>Solutions d'analyse de données et de prédiction des tendances adaptées aux marchés africains. Nous aidons les entreprises à anticiper les évolutions du marché.</p>
+                </div>
+                <div class="service-card fade-in delay-1">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Automatisation Intelligente</h3>
+                    <p>Automatisez vos processus métier avec des solutions IA sur mesure qui réduisent les coûts et augmentent l'efficacité opérationnelle.</p>
+                </div>
+                <div class="service-card fade-in delay-2">
+                    <div class="service-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Chatbots Multilingues</h3>
+                    <p>Assistants virtuels intelligents disponibles en français, anglais et langues locales pour une communication optimale avec vos clients.</p>
+                </div>
+                <div class="service-card fade-in delay-3">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>IA pour l'Agriculture</h3>
+                    <p>Solutions d'intelligence artificielle dédiées à l'agriculture africaine : prévisions météo, optimisation des récoltes, gestion des ressources.</p>
+                </div>
+                <div class="service-card fade-in delay-1">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Santé Digitale</h3>
+                    <p>Applications d'IA pour améliorer l'accès aux soins de santé en zones rurales et optimiser la gestion des établissements médicaux.</p>
+                </div>
+                <div class="service-card fade-in delay-2">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Formation en IA</h3>
+                    <p>Programmes de formation et ateliers pratiques pour entreprises et institutions souhaitant maîtriser les technologies d'intelligence artificielle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Réalisations -->
+    <section id="realisations" class="achievements">
+        <div class="container">
+            <h2>Nos Réalisations</h2>
+            <div class="achievements-grid">
+                <div class="achievement fade-in">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="achievement-number">2026</div>
+                    <h4>Année de Fondation</h4>
+                    <p>Nola-IA voit le jour grâce à la vision de NOLA D NAXE</p>
+                </div>
+                <div class="achievement fade-in delay-1">
+                    <i class="fas fa-users"></i>
+                    <div class="achievement-number">15+</div>
+                    <h4>Experts Gabonais</h4>
+                    <p>Une équipe talentueuse dédiée à l'innovation technologique</p>
+                </div>
+                <div class="achievement fade-in delay-2">
+                    <i class="fas fa-handshake"></i>
+                    <div class="achievement-number">30+</div>
+                    <h4>Partenariats</h4>
+                    <p>Collaborations avec entreprises et institutions gabonaises</p>
+                </div>
+                <div class="achievement fade-in delay-3">
+                    <i class="fas fa-project-diagram"></i>
+                    <div class="achievement-number">25+</div>
+                    <h4>Projets IA</h4>
+                    <p>Solutions déployées au Gabon et en Afrique centrale</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contactez Nola-IA</h2>
+            <div class="contact-container">
+                <div class="contact-info fade-in">
+                    <h3>Parlons de votre projet</h3>
+                    <p>Notre équipe est à votre disposition pour discuter de vos besoins en intelligence artificielle et vous proposer des solutions sur mesure.</p>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Siège Social</h4>
+                            <p>Libreville, Gabon</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@nola-ia.ga</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-globe-africa"></i>
+                        <div>
+                            <h4>Zone d'Intervention</h4>
+                            <p>Gabon et Afrique Centrale</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-phone">
+                        <h4>Contact Direct</h4>
+                        <p>Fondateur & CEO</p>
+                        <a href="tel:+24166789511">+241 66 78 95 11</a>
+                        <p>NOLA D NAXE</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form fade-in delay-1">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Adresse email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Entreprise / Organisation</label>
+                            <input type="text" id="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service intéressé</label>
+                            <select id="service">
+                                <option value="">Sélectionnez un service</option>
+                                <option value="predictive">Analyse Prédictive</option>
+                                <option value="automation">Automatisation Intelligente</option>
+                                <option value="chatbots">Chatbots Multilingues</option>
+                                <option value="agriculture">IA pour l'Agriculture</option>
+                                <option value="health">Santé Digitale</option>
+                                <option value="training">Formation en IA</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Votre message *</label>
+                            <textarea id="message" rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Nola<span>-IA</span></div>
+                    <p>Solutions d'intelligence artificielle innovantes développées au Gabon pour l'Afrique depuis 2026.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#apropos">À propos</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#realisations">Réalisations</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Libreville, Gabon</p>
+                    <p><i class="fas fa-phone"></i> +241 66 78 95 11</p>
+                    <p><i class="fas fa-envelope"></i> contact@nola-ia.ga</p>
+                    <p><i class="fas fa-user-tie"></i> NOLA D NAXE, Fondateur</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nola-IA. Tous droits réservés. | Fondé par <a href="#contact">NOLA D NAXE</a> | Développé avec passion au Gabon</p>
+                <p>IA éthique, transparente et au service du développement africain</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation mobile
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fermer le menu mobile en cliquant sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Formulaire de contact
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Récupération des valeurs
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const service = document.getElementById('service').value;
+            
+            // Messages selon le service sélectionné
+            let serviceMessage = "";
+            if (service) {
+                const serviceNames = {
+                    'predictive': 'Analyse Prédictive',
+                    'automation': 'Automatisation Intelligente',
+                    'chatbots': 'Chatbots Multilingues',
+                    'agriculture': 'IA pour l\'Agriculture',
+                    'health': 'Santé Digitale',
+                    'training': 'Formation en IA',
+                    'other': 'Autre service'
+                };
+                serviceMessage = ` pour le service "${serviceNames[service] || service}"`;
+            }
+            
+            // Simulation d'envoi avec mention du fondateur
+            alert(`Merci ${name} ! Votre message a été envoyé à Nola-IA${serviceMessage}. \n\nNOLA D NAXE ou un membre de notre équipe vous contactera dans les plus brefs délais au numéro que vous pourriez nous fournir.\n\nInnovation gabonaise au service de l'Afrique.`);
+            
+            // Réinitialiser le formulaire
+            contactForm.reset();
+        });
+        
+        // Animation au défilement
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observer les éléments à animer
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Effet de compteur pour les réalisations
+        const achievementNumbers = document.querySelectorAll('.achievement-number');
+        achievementNumbers.forEach(numberElement => {
+            const finalNumber = parseInt(numberElement.textContent);
+            let currentNumber = 0;
+            const increment = finalNumber / 50;
+            const timer = setInterval(() => {
+                currentNumber += increment;
+                if (currentNumber >= finalNumber) {
+                    currentNumber = finalNumber;
+                    clearInterval(timer);
+                }
+                numberElement.textContent = Math.floor(currentNumber) + (numberElement.textContent.includes('+') ? '+' : '');
+            }, 30);
+        });
+        
+        // Message de bienvenue au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log("%c Bienvenue sur Nola-IA 🚀", "color: #00DFA2; font-size: 18px; font-weight: bold;");
+                console.log("%c Développé au Gabon par NOLA D NAXE", "color: #005B41; font-size: 14px;");
+                console.log("%c Contact: +241 66 78 95 11", "color: #008170; font-size: 14px;");
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
